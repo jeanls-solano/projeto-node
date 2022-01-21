@@ -1,37 +1,18 @@
-//no node o servidor se auto gerencia, recebe request.
-'use strict' //auxilia em erros de sintaxe 
-
-//um require sem caminho "./" irá procurar ná pasta node_modules o arquivo 
+//um require sem caminho "./" irá procurar ná pasta node_modules o arquivo
+const app = require('../src/app') 
 const http = require('http');
 const debug = require('debug')('nodestr:server');
-const express = require('express');
-const { version } = require('process');
-const { type } = require('express/lib/response');
 
-
-const app = express();
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port',port);//a porta foi setada então o app.set = 3000 = port
 
 //criando o servidor baseado no "app" que foi exportando do "express"
 const server = http.createServer(app);
-const router = express.Router();
-
-//configurando uma rota
-const route = router.get('/', (req, res, next) => {
-    res.status(200).send({
-        title: "Node store API",
-        version: "0.0.1"
-    });
-});
-
-//onde está a barra pode ser colocada outro prefixo para a rota ex: /carro/marca/bmw/...
-app.use('/',route);
 
 //essa funcão faz o cervidor ficar "ouvindo" essa rota
 server.listen(port);
 server.on('error', onError);
-
+server.on('listening',onListening);
 console.log(port);
 
 //funcão para definir uma porta disponível 
@@ -69,3 +50,11 @@ function onError(error){
             throw error;
     }
 }   
+
+function onListening(){
+    const addr = server.address();
+    const bind = typeof addr === 'string'
+        ? 'pipe' + addr
+        : 'port' + addr.port;
+    debug('Listening on' + bind);
+}
