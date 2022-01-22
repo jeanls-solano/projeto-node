@@ -27,7 +27,7 @@ function normalizePort(val){
     }
     return false;
 }
-// funcão para tratar erros relacionados ao cervidor
+// funcão para tratar erros relacionados ao servidor
 function onError(error){
     if(error.syscall !== 'listen'){
         throw error;
