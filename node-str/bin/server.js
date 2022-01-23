@@ -9,7 +9,7 @@ app.set('port',port);//a porta foi setada então o app.set = 3000 = port
 //criando o servidor baseado no "app" que foi exportando do "express"
 const server = http.createServer(app);
 
-//essa funcão faz o cervidor ficar "ouvindo" essa rota
+//essa funcão faz o servidor ficar "ouvindo" essa rota
 server.listen(port);
 server.on('error', onError);
 server.on('listening',onListening);
